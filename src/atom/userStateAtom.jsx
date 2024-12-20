@@ -1,21 +1,24 @@
-import { atom } from 'jotai'
-import { auth } from "../firebase"
+import { atom } from "jotai";
+import { auth } from "../../firebase.js";
 
 export const userStateAtom = atom({
-    loading: true,
-    user: null
-})
+  loading: true,
+  user: null,
+});
 
-userStateAtom.onMount = (set)  => {
-    console.log("onMount")
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-        set({
-            loading: false,
-            user
-        })
+userStateAtom.onMount = (set) => {
+  console.log("onMount");
+  const unsubscribe = auth.onAuthStateChanged((user) => {
+    set({
+      loading: false,
+      user,
+    });
+
+    
     return () => {
-        console.log("onUnmount")
-        unsubscribe()
-    }
-    })
-}
+      console.log("onUnmount");
+      unsubscribe();
+    };
+  });
+};
+
