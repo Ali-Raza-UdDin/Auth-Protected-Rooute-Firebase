@@ -51,7 +51,7 @@ export default function LoginForm() {
         CMS
       </a>
       <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-md dark:bg-gray-800">
-        <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white">
+        <h2 className="mb-2 text-2xl font-bold text-gray-900 dark:text-white text-center">
           Login
         </h2>
         <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">

@@ -16,13 +16,16 @@ const Sidebar = () => {
           open ? "w-72" : "w-20"
         } bg-black h-screen p-5 pt-8 relative duration-300`}
       >
+        
         <button
           className="absolute text-white cursor-pointer -right-3 top-9 w-6 h-6 bg-[#323333] border-1 border-white rounded-full flex items-center justify-center"
           onClick={toggleSidebar}
         >
           {open ? <X className="w-4 h-4" /> : <Minus className="w-4 h-4" />}
         </button>
-
+        <h1 className={`${!open ?  "text-white origin-left left-0  font-medium text-xl duration-200" :  "hidden"}`}>
+          CMS 
+        </h1>
         <div className="flex gap-x-4 items-center">
         <Feather className="text-white"/>
           <h1
@@ -32,6 +35,7 @@ const Sidebar = () => {
           >
             CMS
           </h1>
+         
         </div>
 
         <ul className="pt-6">

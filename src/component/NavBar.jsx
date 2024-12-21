@@ -3,6 +3,8 @@ import "./Navbar.css";
 import { LogOut, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -36,7 +38,7 @@ const Navbar = () => {
               </div>
             </button>
             {isDropdownOpen && (
-              <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ringring-opacity-5 focus:outline-none">
+              <div className=" z-20 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ringring-opacity-5 focus:outline-none">
                 <div className="px-4 py-2 text-xs text-gray-500">
                   My Account
                 </div>
@@ -53,7 +55,17 @@ const Navbar = () => {
                   Settings
                 </Link>
                 <div className="border-t border-gray-100"></div>
-                <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <button
+                  className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => {
+                    const confirmation = confirm(
+                      "Are you sure you want to logout?"
+                    );
+                    if (confirmation) {
+                      signOut(auth);
+                    }
+                  }}
+                >
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </button>

@@ -1,11 +1,18 @@
 import React, { useCallback, useEffect } from "react";
 import { Table, Input, Button, message, Popconfirm } from "antd";
 import { useState } from "react";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import "../App.css";
 import { Truck, User } from "lucide-react";
 import DriverModal from "./userModal";
+
 
 function UserManagment() {
   const [loading, setLoading] = useState(false);
@@ -30,9 +37,19 @@ function UserManagment() {
     getData();
   }, [isModalOpen]);
 
+  useEffect(() => {
+    // Apply search filter whenever searchText changes
+    const filtered = users.filter(
+      (user) =>
+        user.name?.toLowerCase().includes(searchText.toLowerCase()) ||
+        user.email?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredData(filtered);
+  }, [searchText, users]);
+
   const handleSearch = useCallback((e) => {
     setSearchText(e.target.value);
-  }, [isModalOpen]);
+  }, []);
 
   const getData = async () => {
     setLoading(true);
@@ -58,7 +75,6 @@ function UserManagment() {
       const userDoc = doc(db, "Users", key);
       await deleteDoc(userDoc);
 
-      // Update local state to reflect the deletion
       const newData = users.filter((item) => item.key !== key);
       setUsers(newData);
       setFilteredData(newData);
@@ -79,7 +95,7 @@ function UserManagment() {
 
     try {
       const userDoc = doc(db, "Users", id);
-      await updateDoc(userDoc, { status: newStatus }, { merge: true });
+      await updateDoc(userDoc, { status: newStatus });
       message.success(`Users ${newStatus.toLowerCase()} successfully`);
     } catch (error) {
       console.error("Error updating User status:", error);
