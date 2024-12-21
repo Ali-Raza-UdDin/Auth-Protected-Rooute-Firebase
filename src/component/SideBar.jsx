@@ -3,7 +3,7 @@ import { User, X, Minus, Feather } from "lucide-react";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
-  const Menus = [{ title: "Overview", icon: User }];
+  const Menus = [{ title: "User Managment", icon: User }];
 
   const toggleSidebar = () => {
     setOpen(!open);
